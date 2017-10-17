@@ -336,10 +336,12 @@ void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
 			Color sc = surface.getPixel(x, y);
 			float rScA = sc.GetA() / 255.0f;
 			Color dc = GetPixel(x + sx, y + sy);
+			float rDcA = dc.GetA() / 255.0f;
 			
-			c.SetR((char)(((sc.GetR() * rScA) + (dc.GetR() * (1 - rScA))) + 0.5f));
-			c.SetG((char)(((sc.GetG() * rScA) + (dc.GetG() * (1 - rScA))) + 0.5f));
-			c.SetB((char)(((sc.GetB() * rScA) + (dc.GetB() * (1 - rScA))) + 0.5f));
+			c.SetR((char)((sc.GetR() + (dc.GetR() * (1 - rScA))) + 0.5f));
+			c.SetG((char)((sc.GetG() + (dc.GetG() * (1 - rScA))) + 0.5f));
+			c.SetB((char)((sc.GetB() + (dc.GetB() * (1 - rScA))) + 0.5f));
+			c.SetA((char)((rScA + rDcA - rScA * rDcA) * 255.0f));
 			
 			PutPixel(x + sx, y + sy, c);
 		}

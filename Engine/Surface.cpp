@@ -122,6 +122,11 @@ Surface::Surface(const std::string & filename)
 						c.SetA(255);
 					}
 
+					float rA = c.GetA() / 255.0f;
+					c.SetR((char)(c.GetR() * rA + 0.5f));
+					c.SetG((char)(c.GetG() * rA + 0.5f));
+					c.SetB((char)(c.GetB() * rA + 0.5f));
+
 					putPixel(x, y, c);
 				}
 				file.seekg(padding, std::ios::cur);
