@@ -7,6 +7,8 @@ class Surface
 {
 	int width, height;
 	Color* pixels = nullptr;
+private:
+	int leastSignificantSetBit(int bitfield);
 public:
 	Surface(const std::string& filename);
 	Surface(int width, int height);
@@ -16,5 +18,5 @@ public:
 	int getWidth() const;
 	int getHeight() const;
 	Color getPixel(int x, int y) const;
-	void setPixel(int x, int y, const Color& color);
+	void putPixel(int x, int y, const Color& color);
 };

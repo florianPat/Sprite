@@ -25,15 +25,8 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	surface(100, 100)
+	surface("dib32.bmp")
 {
-	for (int y = 0; y < surface.getHeight(); ++y)
-	{
-		for (int x = 0; x < surface.getWidth(); ++x)
-		{
-			surface.setPixel(x, y, Color(255, 0, 0));
-		}
-	}
 }
 
 void Game::Go()

@@ -58,6 +58,7 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	Color GetPixel(int x, int y);
 	void DrawSprite(const Surface& surface,int x,int y );
 	~Graphics();
 private:

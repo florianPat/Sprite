@@ -316,13 +316,32 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+Color Graphics::GetPixel(int x, int y)
+{
+	assert(x >= 0);
+	assert(x < int(Graphics::ScreenWidth));
+	assert(y >= 0);
+	assert(y < int(Graphics::ScreenHeight));
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
+}
+
 void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
 {
 	for (int y = 0; y < surface.getHeight(); ++y)
 	{
 		for (int x = 0; x < surface.getWidth(); ++x)
 		{
-			PutPixel(x + sx, y + sy, surface.getPixel(x, y));
+			Color c;
+			
+			Color sc = surface.getPixel(x, y);
+			float rScA = sc.GetA() / 255.0f;
+			Color dc = GetPixel(x + sx, y + sy);
+			
+			c.SetR((char)(((sc.GetR() * rScA) + (dc.GetR() * (1 - rScA))) + 0.5f));
+			c.SetG((char)(((sc.GetG() * rScA) + (dc.GetG() * (1 - rScA))) + 0.5f));
+			c.SetB((char)(((sc.GetB() * rScA) + (dc.GetB() * (1 - rScA))) + 0.5f));
+			
+			PutPixel(x + sx, y + sy, c);
 		}
 	}
 }
