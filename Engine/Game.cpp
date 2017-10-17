@@ -24,8 +24,16 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	surface(100, 100)
 {
+	for (int y = 0; y < surface.getHeight(); ++y)
+	{
+		for (int x = 0; x < surface.getWidth(); ++x)
+		{
+			surface.setPixel(x, y, Color(255, 0, 0));
+		}
+	}
 }
 
 void Game::Go()
@@ -42,4 +50,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	gfx.DrawSprite(surface, 200, 200);
 }

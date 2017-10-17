@@ -316,6 +316,17 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
+{
+	for (int y = 0; y < surface.getHeight(); ++y)
+	{
+		for (int x = 0; x < surface.getWidth(); ++x)
+		{
+			PutPixel(x + sx, y + sy, surface.getPixel(x, y));
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
