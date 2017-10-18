@@ -43,5 +43,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(surface, 200, 200);
+	gfx.DrawSprite(surface, 0, 0);
 }

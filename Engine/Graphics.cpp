@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <string>
 #include <array>
+#include <minmax.h>
 
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
@@ -327,9 +328,14 @@ Color Graphics::GetPixel(int x, int y)
 
 void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
 {
-	for (int y = 0; y < surface.getHeight(); ++y)
+	int startX = max(0, -sx);
+	int startY = max(0, -sy);
+	int endX = min(surface.getWidth(), surface.getWidth() - ((sx + surface.getWidth()) - ScreenWidth));
+	int endY = min(surface.getHeight(), surface.getHeight() - ((sy + surface.getHeight()) - ScreenHeight));
+
+	for (int y = startY; y < endY; ++y)
 	{
-		for (int x = 0; x < surface.getWidth(); ++x)
+		for (int x = startX; x < endX; ++x)
 		{
 			Color c;
 			
