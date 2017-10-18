@@ -5,59 +5,60 @@
 template <typename T>
 class Vec2_
 {
-	Vec2_::Vec2_(T x_in, T y_in)
+public:
+	Vec2_(T x_in, T y_in)
 		:
 		x(x_in),
 		y(y_in)
 	{
 	}
 
-	Vec2_ Vec2_::operator+(const Vec2_& rhs) const
+	Vec2_<T> operator+(const Vec2_<T>& rhs) const
 	{
-		return Vec2_(x + rhs.x, y + rhs.y);
+		return Vec2_<T>(x + rhs.x, y + rhs.y);
 	}
 
-	Vec2_& Vec2_::operator+=(const Vec2_& rhs)
+	Vec2_<T>& operator+=(const Vec2_<T>& rhs)
 	{
 		return *this = *this + rhs;
 	}
 
-	Vec2_ Vec2_::operator*(T rhs) const
+	Vec2_<T> operator*(T rhs) const
 	{
-		return Vec2_(x * rhs, y * rhs);
+		return Vec2_<T>(x * rhs, y * rhs);
 	}
 
-	Vec2_& Vec2_::operator*=(T rhs)
+	Vec2_<T>& operator*=(T rhs)
 	{
 		return *this = *this * rhs;
 	}
 
-	Vec2_ Vec2_::operator-(const Vec2_& rhs) const
+	Vec2_<T> operator-(const Vec2_<T>& rhs) const
 	{
-		return Vec2_(x - rhs.x, y - rhs.y);
+		return Vec2_<T>(x - rhs.x, y - rhs.y);
 	}
 
-	Vec2_& Vec2_::operator-=(const Vec2_& rhs)
+	Vec2_<T>& operator-=(const Vec2_<T>& rhs)
 	{
 		return *this = *this - rhs;
 	}
 
-	T Vec2_::GetLength() const
+	T GetLength() const
 	{
 		return std::sqrt(GetLengthSq());
 	}
 
-	T Vec2_::GetLengthSq() const
+	T GetLengthSq() const
 	{
 		return x * x + y * y;
 	}
 
-	Vec2_& Vec2_::Normalize()
+	Vec2_<T>& Normalize()
 	{
 		return *this = GetNormalized();
 	}
 
-	Vec2_ Vec2_::GetNormalized() const
+	Vec2_<T> GetNormalized() const
 	{
 		const T len = GetLength();
 		if (len != 0.0f)
@@ -67,7 +68,7 @@ class Vec2_
 		return *this;
 	}
 
-	Vec2_::operator Vei2() const
+	operator Vec2_<T>() const
 	{
 		return{ int(x),int(y) };
 	}
@@ -78,4 +79,4 @@ public:
 };
 
 typedef Vec2_<float> Vec2;
-typedef Vec2_<int> Vei2; #pragma once
+typedef Vec2_<int> Vei2;

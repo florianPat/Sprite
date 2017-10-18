@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	surface("dib32.bmp")
+	surface("dib32.bmp", RectI(30, 200, 140, 220))
 {
 }
 
@@ -39,9 +39,17 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+		x -= speed;
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+		x += speed;
+	if (wnd.kbd.KeyIsPressed(VK_UP))
+		y -= speed;
+	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+		y += speed;
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(surface, 0, 0);
+	gfx.DrawSprite(surface, x, y);
 }

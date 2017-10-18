@@ -44,5 +44,7 @@ private:
 	/********************************/
 	/*  User Variables              */
 	Surface surface;
+	static constexpr int speed = 10;
+	int x = 0, y = 0;
 	/********************************/
 };

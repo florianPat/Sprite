@@ -37,14 +37,16 @@ Surface::Surface(const std::string & filename)
 		width = bmInfoHeader.biWidth;
 		height = bmInfoHeader.biHeight;
 
+		bool isBottomUp = height < 0;
+		if (isBottomUp)
+			height *= -1;
+
+		rect = RectI(Vec2_<int>(0, 0), width, height);
+
 		pixels = new Color[width * height];
 
 		int padding = ((bitCount * width + 31) / 32) * 4;
 		bool isBitfield = bmInfoHeader.biCompression == BI_BITFIELDS;
-
-		bool isBottomUp = height < 0;
-		if (isBottomUp)
-			height *= -1;
 
 		file.seekg(fileOffsetToPixels, std::ios::cur);
 		
@@ -140,11 +142,29 @@ Surface::Surface(const std::string & filename)
 	}
 }
 
-Surface::Surface(int width, int height) : width(width), height(height), pixels(new Color[width * height])
+Surface::Surface(int width, int height) : width(width), height(height), pixels(new Color[width * height]), rect(Vec2_<int>(0, 0), width, height)
 {
 }
 
-Surface::Surface(const Surface & other) : width(other.width), height(other.height), pixels(new Color[width * height])
+Surface::Surface(const std::string & filename, const RectI & rect) : Surface(filename)
+{
+	assert(rect.left >= 0);
+	assert(rect.top >= 0);
+	assert(rect.right <= width);
+	assert(rect.bottom <= height);
+	this->rect = rect;
+}
+
+Surface::Surface(int width, int height, const RectI & rect) : Surface(width, height)
+{
+	assert(rect.left >= 0);
+	assert(rect.top >= 0);
+	assert(rect.right <= width);
+	assert(rect.bottom <= height);
+	this->rect = rect;
+}
+
+Surface::Surface(const Surface & other) : width(other.width), height(other.height), pixels(new Color[width * height]), rect(other.rect)
 {
 	int nPixels = width * height;
 	for (int i = 0; i < nPixels; ++i)
@@ -160,6 +180,7 @@ Surface & Surface::operator=(const Surface & other)
 
 	width = other.width;
 	height = other.height;
+	rect = other.rect;
 
 	pixels = new Color[width * height];
 
@@ -176,6 +197,16 @@ Surface::~Surface()
 {
 	delete[] pixels;
 	pixels = nullptr;
+}
+
+RectI & Surface::getRect() const
+{
+	return (RectI&)rect;
+}
+
+void Surface::setRect(const RectI & newRect)
+{
+	rect = newRect;
 }
 
 int Surface::getWidth() const

@@ -8,7 +8,7 @@ class Rect_
 public:
 	Rect_() = default;
 
-	Rect_::Rect_(T left_in, T right_in, T top_in, T bottom_in)
+	Rect_(T left_in, T right_in, T top_in, T bottom_in)
 		:
 		left(left_in),
 		right(right_in),
@@ -17,57 +17,57 @@ public:
 	{
 	}
 
-	Rect_::Rect_(const Vec2<T>& topLeft, const Vec2<T> & bottomRight)
+	Rect_(const Vec2_<T>& topLeft, const Vec2_<T> & bottomRight)
 		:
-		Rect_(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
+		Rect_<T>(topLeft.x, bottomRight.x, topLeft.y, bottomRight.y)
 	{
 	}
 
-	Rect_::Rect_(const Vec2<T>& topLeft, T width, T height)
+	Rect_(const Vec2_<T>& topLeft, T width, T height)
 		:
-		Rect_(topLeft, topLeft + Vec2<T>(width, height))
+		Rect_<T>(topLeft, topLeft + Vec2_<T>(width, height))
 	{
 	}
 
-	bool Rect_::IsOverlappingWith(const Rect_& other) const
+	bool IsOverlappingWith(const Rect_<T>& other) const
 	{
 		return right > other.left && left < other.right
 			&& bottom > other.top && top < other.bottom;
 	}
 
-	bool Rect_::IsContainedBy(const Rect_ & other) const
+	bool IsContainedBy(const Rect_<T> & other) const
 	{
 		return left >= other.left && right <= other.right &&
 			top >= other.top && bottom <= other.bottom;
 	}
 
-	bool Rect_::Contains(const Vec2<T>& poT) const
+	bool Contains(const Vec2_<T>& poT) const
 	{
 		return poT.x >= left && poT.x < right && poT.y >= top && poT.y < bottom;
 	}
 
-	Rect_ Rect_::FromCenter(const Vec2<T> & center, T halfWidth, T halfHeight)
+	Rect_ FromCenter(const Vec2_<T> & center, T halfWidth, T halfHeight)
 	{
-		const Vec2<T> half(halfWidth, halfHeight);
-		return Rect_(center - half, center + half);
+		const Vec2_<T> half(halfWidth, halfHeight);
+		return Rect_<T>(center - half, center + half);
 	}
 
-	Rect_ Rect_::GetExpanded(T offset) const
+	Rect_ GetExpanded(T offset) const
 	{
-		return Rect_(left - offset, right + offset, top - offset, bottom + offset);
+		return Rect_<T>(left - offset, right + offset, top - offset, bottom + offset);
 	}
 
-	Vec2<T> Rect_::GetCenter() const
+	Vec2_<T> GetCenter() const
 	{
-		return Vec2<T>((left + right) / 2, (top + bottom) / 2);
+		return Vec2_<T>((left + right) / 2, (top + bottom) / 2);
 	}
 
-	T Rect_::GetWidth() const
+	T GetWidth() const
 	{
 		return right - left;
 	}
 
-	T Rect_::GetHeight() const
+	T GetHeight() const
 	{
 		return bottom - top;
 	}
@@ -80,4 +80,4 @@ public:
 };
 
 typedef Rect_<float> RectF;
-typedef Rect_<int> RectI; #pragma once
+typedef Rect_<int> RectI;

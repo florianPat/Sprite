@@ -328,20 +328,23 @@ Color Graphics::GetPixel(int x, int y)
 
 void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
 {
-	int startX = max(0, -sx);
-	int startY = max(0, -sy);
-	int endX = min(surface.getWidth(), surface.getWidth() - ((sx + surface.getWidth()) - ScreenWidth));
-	int endY = min(surface.getHeight(), surface.getHeight() - ((sy + surface.getHeight()) - ScreenHeight));
+	auto rect = surface.getRect();
+
+	int startX = max(rect.left, (-sx) + rect.left);
+	int startY = max(rect.top, (-sy) + rect.top);
+	int endX = min(rect.right, rect.right - ((sx + rect.right) - ScreenWidth) + startX);
+	int endY = min(rect.bottom, rect.bottom - ((sy + rect.bottom) - ScreenHeight) + startY);
 
 	for (int y = startY; y < endY; ++y)
 	{
 		for (int x = startX; x < endX; ++x)
 		{
 			Color c;
+			const Vei2 pos = {x - rect.left + sx, y - rect.top + sy};
 			
 			Color sc = surface.getPixel(x, y);
 			float rScA = sc.GetA() / 255.0f;
-			Color dc = GetPixel(x + sx, y + sy);
+			Color dc = GetPixel(pos.x, pos.y);
 			float rDcA = dc.GetA() / 255.0f;
 			
 			c.SetR((char)((sc.GetR() + (dc.GetR() * (1 - rScA))) + 0.5f));
@@ -349,7 +352,7 @@ void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
 			c.SetB((char)((sc.GetB() + (dc.GetB() * (1 - rScA))) + 0.5f));
 			c.SetA((char)((rScA + rDcA - rScA * rDcA) * 255.0f));
 			
-			PutPixel(x + sx, y + sy, c);
+			PutPixel(pos.x, pos.y, c);
 		}
 	}
 }
