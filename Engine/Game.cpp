@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	surface("dib32.bmp", RectI(30, 200, 140, 220))
+	surface("dib32.bmp")
 {
 }
 
@@ -51,5 +51,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	gfx.DrawSprite(surface, x, y);
+	gfx.DrawSurface(surface, x, y);
 }

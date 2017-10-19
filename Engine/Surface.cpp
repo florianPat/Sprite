@@ -46,7 +46,7 @@ Surface::Surface(const std::string & filename)
 		pixels = new Color[width * height];
 
 		int padding = ((bitCount * width + 31) / 32) * 4;
-		bool isBitfield = bmInfoHeader.biCompression == BI_BITFIELDS;
+		bool isBitfield = bmInfoHeader.biCompression & BI_BITFIELDS;
 
 		file.seekg(fileOffsetToPixels, std::ios::cur);
 		
@@ -86,13 +86,20 @@ Surface::Surface(const std::string & filename)
 						c.SetR((char)(color >> leastSignificantSetBit(redMask)));
 						c.SetG((char)(color >> leastSignificantSetBit(greenMask)));
 						c.SetB((char)(color >> leastSignificantSetBit(blueMask)));
+						c.SetA((char)(color >> leastSignificantSetBit(alphaMask)));
 					}
 					else
 					{
 						c.SetB(file.get());
 						c.SetG(file.get());
 						c.SetR(file.get());
+						c.SetA(255);
 					}
+
+					float rA = c.GetA() / 255.0f;
+					c.SetR((char)(c.GetR() * rA + 0.5f));
+					c.SetG((char)(c.GetG() * rA + 0.5f));
+					c.SetB((char)(c.GetB() * rA + 0.5f));
 
 					putPixel(x, y, c);
 				}

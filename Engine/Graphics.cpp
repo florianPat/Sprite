@@ -326,7 +326,7 @@ Color Graphics::GetPixel(int x, int y)
 	return pSysBuffer[Graphics::ScreenWidth * y + x];
 }
 
-void Graphics::DrawSprite(const Surface & surface, int sx, int sy)
+void Graphics::DrawSurface(const Surface & surface, int sx, int sy)
 {
 	auto rect = surface.getRect();
 

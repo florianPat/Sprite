@@ -59,7 +59,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	Color GetPixel(int x, int y);
-	void DrawSprite(const Surface& surface,int x,int y );
+	void DrawSurface(const Surface& surface,int x,int y );
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
