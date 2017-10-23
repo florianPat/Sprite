@@ -26,7 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	al(),
-	surface(al.LoadFromASA("dib32.bmp")),
+	surface(al.LoadSurfaceFromASA("dib32.bmp")),
 	s2("dib32.bmp")
 {
 }

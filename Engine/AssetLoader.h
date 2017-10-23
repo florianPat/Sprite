@@ -15,5 +15,5 @@ public:
 	AssetLoader(const AssetLoader& al) = delete;
 	AssetLoader& operator=(const AssetLoader& al) = delete;
 	//Check with operator bool if its "correct"
-	Surface LoadFromASA(const std::string& filename);
+	Surface LoadSurfaceFromASA(const std::string& filename);
 };
