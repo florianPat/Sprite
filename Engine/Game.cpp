@@ -26,7 +26,8 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	al(),
-	surface(al.LoadFromASA("dib32.bmp"))
+	surface(al.LoadFromASA("dib32.bmp")),
+	s2("dib32.bmp")
 {
 }
 
@@ -53,4 +54,5 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	gfx.DrawSurface(surface, x, y);
+	gfx.DrawSurface(s2, 300, 300);
 }

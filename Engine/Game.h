@@ -46,6 +46,7 @@ private:
 	/*  User Variables              */
 	AssetLoader al;
 	Surface surface;
+	Surface s2;
 	static constexpr int speed = 10;
 	int x = 0, y = 0;
 	/********************************/
