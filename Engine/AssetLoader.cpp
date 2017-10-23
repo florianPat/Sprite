@@ -24,6 +24,7 @@ AssetLoader::AssetLoader()
 		std::getline(assetFile, line);
 		assert(line == "<bitmaps>");
 
+		//TODO: Fix this in AssetBuilder!
 		assetFile.seekg(fileHeader.offsetToSounds);
 		std::getline(assetFile, line);
 		//assert(line == "<sounds>");
@@ -71,15 +72,11 @@ Surface AssetLoader::LoadFromASA(const std::string & filename)
 
 	if (found)
 	{
-		Surface result;
+		Surface result(bmpHeader.metadata.width, bmpHeader.metadata.height);
 
-		result.width = bmpHeader.metadata.width;
-		result.height = bmpHeader.metadata.height;
+		assetFile.seekg(bmpHeader.metadata.offsetToPixels);
 
-		result.pixels = new Color(result.width * result.height);
-		assetFile.seekg(bmpHeader.metadata.offsetToPixels, std::ios::cur);
-
-		for (int y = 0; y < result.height; ++y)
+		/*for (int y = 0; y < result.height; ++y)
 		{
 			for (int x = 0; x < result.width; ++x)
 			{
@@ -87,9 +84,9 @@ Surface AssetLoader::LoadFromASA(const std::string & filename)
 				assetFile.read((char*)&color, sizeof(Color));
 				result.putPixel(x, y, color);
 			}
-		}
+		}*/
 
-		result.rect = RectI(Vec2_<int>(0, 0), result.width, result.height);
+		assetFile.read((char*)result.pixels, sizeof(Color) * result.width * result.height);
 
 		return result;
 	}
