@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Surface.h"
+#include "AssetLoader.h"
 
 class Game
 {
@@ -43,6 +44,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	AssetLoader al;
 	Surface surface;
 	static constexpr int speed = 10;
 	int x = 0, y = 0;

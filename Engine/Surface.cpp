@@ -200,6 +200,16 @@ Surface & Surface::operator=(const Surface & other)
 	return *this;
 }
 
+inline Surface::operator bool() const
+{
+	return width != 0;
+}
+
+inline bool Surface::operator!() const
+{
+	return !(*this);
+}
+
 Surface::~Surface()
 {
 	delete[] pixels;
@@ -242,4 +252,9 @@ void Surface::putPixel(int x, int y, const Color & color)
 	assert(y >= 0);
 	assert(y < height);
 	pixels[x + y * width] = color;
+}
+
+const Color * Surface::getPixels() const
+{
+	return pixels;
 }
